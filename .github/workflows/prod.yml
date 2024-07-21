@@ -32,7 +32,7 @@ jobs:
           host: ${{ secrets.HOST_SSH }}
           username: ${{ secrets.USER_SSH }}
           key: ${{ secrets.KEY_SSH }}
-          passphrase: ${{ secrets.PASSPHRASE_SSH }}
+          password: ${{ secrets.PASSPHRASE_SSH }}
           script: |
             whoami
             ls -al
