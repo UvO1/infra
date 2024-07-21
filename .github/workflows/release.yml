@@ -39,17 +39,13 @@ jobs:
         run: |
             docker push cr.yandex/${REGISTRY_ID}/app:${RELEASE_VERSION}
             docker push cr.yandex/${REGISTRY_ID}/app:${RELEASE_VERSION}_latest
-      - name: Issue
+      - name: Create Issue
         uses: dacbd/create-issue-action@main
         with:
-          token: $GITHUB_TOKEN
-          title: Release $RELEASE_VERSION
+          token: ${GITHUB_TOKEN}
+          title: Release ${RELEASE_VERSION}
           body: |
-            ## Release ${RELEASE_VERSION}: Issue:
-            ## Date: 
-            ## Author: %{AUTHOR}
-            ## Version: ${RELEASE_VERSION}
-            ## Link: http://cr.yandex/${REGISTRY_ID}/app:${RELEASE_VERSION}_latest
+            ## Release ${RELEASE_VERSION}
             
 
             
