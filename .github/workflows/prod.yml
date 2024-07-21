@@ -38,5 +38,5 @@ jobs:
       - name: Pull needed image
         run: docker pull cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
       - name: Run needed version    
-        run: docker run -p 3000:3000 cr.yandex/${{ secrets.REGISTRY_ID }}/app:${RELEASE_TO_DEPLOY}_latest
+        run: docker run -d -p 3000:3000 cr.yandex/${{ secrets.REGISTRY_ID }}/app:${RELEASE_TO_DEPLOY}_latest
               
