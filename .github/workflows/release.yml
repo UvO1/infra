@@ -34,6 +34,6 @@ jobs:
         run: echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
       - name:  Load Docker-image to Container Registry
         run: |
-            docker push cr.yandex/$REGISTRY_ID/app:$RELEASE_VERSION
-            docker push cr.yandex/$REGISTRY_ID/app:$RELEASE_VERSION_latest
+            docker push cr.yandex/${REGISTRY_ID}/app:${RELEASE_VERSION}
+            docker push cr.yandex/${REGISTRY_ID}/app:${RELEASE_VERSION}_latest
             
