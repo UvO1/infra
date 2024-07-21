@@ -29,7 +29,7 @@ jobs:
       - name: Push to release branch
         run: git push origin releases/$RELEASE_VERSION
       - name: Build
-        run: docker build . -t cr.yandex/$REGISTRY_ID/app:$RELEASE_VERSION -t cr.yandex/$REGISTRY_ID/app:$RELEASE_VERSION_latest
+        run: docker build . -t cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.run_number }} -t cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.run_number }}_latest
       - name: Login to Cloud
         run: echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
       - name:  Load Docker-image to Container Registry
