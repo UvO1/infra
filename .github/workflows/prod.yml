@@ -35,5 +35,6 @@ jobs:
             whoami
             echo "${{ secrets.OAUTH_TOKEN }}" | docker login --username oauth --password-stdin cr.yandex
             docker pull cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
+            docker stop $(docker ps -a -q)
             docker run -d -p 3000:3000 cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
               
