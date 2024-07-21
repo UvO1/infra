@@ -1,0 +1,39 @@
+name: Prod
+
+on: 
+  workflow_dispatch:
+    inputs: 
+      release_version:
+        description: 'Version of release to prod'
+        required: true
+    
+jobs:
+  prod:
+    name: release to production
+    runs-on: ubuntu-22.04
+    env:
+      REGISTRY_ID: ${{ secrets.REGISTRY_ID }}
+      RELEASE_VERSION: ${{ github.run_number }}
+      OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
+      RELEASE_TO_DEPLOY: ${{ github.event.inputs.release_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Login to Cloud
+        run: echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
+      - name: Deploy SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_SSH }}
+          username: ${{ secrets.USER_SSH }}
+          key: ${{ secrets.KEY_SSH }}
+          script: |
+            echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
+            docker pull cr.yandex/${{ secrets.REGISTRY_ID }}/app:${RELEASE_TO_DEPLOY}_latest
+            docker run -p 3000:3000 cr.yandex/${{ secrets.REGISTRY_ID }}/app:${RELEASE_TO_DEPLOY}_latest
+              
