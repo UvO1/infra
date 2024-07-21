@@ -27,16 +27,14 @@ jobs:
       - name: Login to Cloud
         run: echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
       - name: Deploy SSH
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST_SSH }}
           username: ${{ secrets.USER_SSH }}
           key: ${{ secrets.KEY_SSH }}
-          password: ${{ secrets.PASSPHRASE_SSH }}
+          passphrase: ${{ secrets.PASSPHRASE_SSH }}
           script: |
             whoami
-            ls -al
-            echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
       - name: Pull needed image
         run: docker pull cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
       - name: Run needed version    
