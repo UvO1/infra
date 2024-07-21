@@ -35,8 +35,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE_SSH }}
           script: |
             whoami
-      - name: Pull needed image
-        run: docker pull cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
-      - name: Run needed version    
-        run: docker run -d -p 3000:3000 cr.yandex/${{ secrets.REGISTRY_ID }}/app:${RELEASE_TO_DEPLOY}_latest
+            echo ${OAUTH_TOKEN} | docker login --username oauth --password-stdin cr.yandex
+            docker pull cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
+            docker run -d -p 3000:3000 cr.yandex/${{ secrets.REGISTRY_ID }}/app:${RELEASE_TO_DEPLOY}_latest
               
