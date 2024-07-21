@@ -24,8 +24,6 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-      - name: Login to Cloud
-        run: echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
       - name: Deploy SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -35,7 +33,7 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE_SSH }}
           script: |
             whoami
-            echo ${OAUTH_TOKEN} | docker login --username oauth --password-stdin cr.yandex
+            echo "${{ secrets.OAUTH_TOKEN }}" | docker login --username oauth --password-stdin cr.yandex
             docker pull cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
-            docker run -d -p 3000:3000 cr.yandex/${{ secrets.REGISTRY_ID }}/app:${RELEASE_TO_DEPLOY}_latest
+            docker run -d -p 3000:3000 cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
               
