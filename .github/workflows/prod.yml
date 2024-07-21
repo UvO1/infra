@@ -34,6 +34,8 @@ jobs:
           key: ${{ secrets.KEY_SSH }}
           passphrase: ${{ secrets.PASSPHRASE_SSH }}
           script: |
+            whoami
+            ls -al
             echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
       - name: Pull needed image
         run: docker pull cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.event.inputs.release_version }}_latest
