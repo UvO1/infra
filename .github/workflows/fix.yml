@@ -1,6 +1,6 @@
 name: Fix
-
-on: [workflow_dispatch]
+on: 
+  workflow_dispatch:
 
 jobs:
   release:
@@ -12,7 +12,6 @@ jobs:
       OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
       GITHUB_TOKEN: ${{ github.token }}
       AUTHOR: ${{ github.actor }}
-      
     steps:
       - name: Checkout
         uses: actions/checkout@v4
