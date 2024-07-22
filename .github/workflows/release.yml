@@ -33,6 +33,16 @@ jobs:
         run: git push origin releases/$RELEASE_VERSION
       - name: Build
         run: docker build . -t cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.run_number }} -t cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.run_number }}_latest
+      - name: Create Issue
+        uses: dacbd/create-issue-action@main
+        with:
+          token: ${{ github.token }}
+          title: Release ${{ github.run_number }}
+          body: |
+            ## Release 
+            Author: ${{ github.actor }}
+            Version: ${{ github.run_number }}
+            Link: http://cr.yandex/${{ secrets.REGISTRY_ID }}/app:${{ github.run_number }}_latest
       - name: Login to Cloud
         run: echo $OAUTH_TOKEN | docker login --username oauth --password-stdin cr.yandex
       - name:  Load Docker-image to Container Registry
