@@ -22,16 +22,13 @@ jobs:
           node-version: 20
           cache: 'npm'
       - name: Create Issue
-        uses: dacbd/create-issue-action@main
+      - uses: actions/checkout@v3
+      - uses: dacbd/create-issue-action@v1
         with:
-          token: ${GITHUB_TOKEN}
+          token: ${{ github.token }}
           title: Release ${RELEASE_VERSION}
           body: |
-            ## Release ${RELEASE_VERSION}: Issue:
-            Date: 
-            Author: %{AUTHOR}
-            Version: ${RELEASE_VERSION}
-            Link: http://cr.yandex/${REGISTRY_ID}/app:${RELEASE_VERSION}_latest
+            ## Release
 
             
             
