@@ -34,7 +34,7 @@ jobs:
           body: |
             ## Release 
             Author: ${{ github.actor }}
-            Date: $NOW 
+            Date: ${{ env.NOW }}
 
       - name: Deploy SSH
         uses: appleboy/ssh-action@v1.0.3
