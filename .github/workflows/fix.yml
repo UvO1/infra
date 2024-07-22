@@ -1,0 +1,37 @@
+name: Release
+
+on: [workflow_dispatch]
+
+jobs:
+  release:
+    name: create release
+    runs-on: ubuntu-22.04
+    env:
+      REGISTRY_ID: ${{ secrets.REGISTRY_ID }}
+      RELEASE_VERSION: ${{ github.run_number }}
+      OAUTH_TOKEN: ${{ secrets.OAUTH_TOKEN }}
+      GITHUB_TOKEN: ${{ github.token }}
+      AUTHOR: ${{ github.actor }}
+      
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Create Issue
+        uses: dacbd/create-issue-action@main
+        with:
+          token: ${GITHUB_TOKEN}
+          title: Release ${RELEASE_VERSION}
+          body: |
+            ## Release ${RELEASE_VERSION}: Issue:
+            Date: 
+            Author: %{AUTHOR}
+            Version: ${RELEASE_VERSION}
+            Link: http://cr.yandex/${REGISTRY_ID}/app:${RELEASE_VERSION}_latest
+
+            
+            
