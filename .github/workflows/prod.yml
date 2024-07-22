@@ -24,6 +24,18 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%d-%m-%Y')" >> $GITHUB_ENV
+      - name: Create Issue
+        uses: dacbd/create-issue-action@main
+        with:
+          token: ${{ github.token }}
+          title: Release ${{ github.run_number }} выкачан в прод
+          body: |
+            ## Release 
+            Author: ${{ github.actor }}
+            Date: $NOW 
+
       - name: Deploy SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
